@@ -22,4 +22,5 @@ Route::view('noaccess','noaccess');
 Route::group(['middleware'=>['protectedpage']],function (){
     Route::view('users','users');
 });
-
+Route::post('users',[usersController::class,'getData']);
+Route::view('login','users');
