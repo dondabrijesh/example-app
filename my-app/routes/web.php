@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\usersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::view('home','home');
+//Route::view('users','users');
+Route::view('noaccess','noaccess');
+Route::group(['middleware'=>['protectedpage']],function (){
+    Route::view('users','users');
+});
+
