@@ -1,20 +1,29 @@
-<h1>User Login</h1>
-@if($errors->any())
-    @foreach($errors->all() as $err)
-        <li>{{$err}}
-        </li>
-        @endforeach
-    @endif
-<form action="users" method="post">
-    @csrf
-   UserId: <input type="text" value="" name="username" placeholder="Enter userid">
-    <span style="color: red">@error('username'){{$message}}@enderror</span>
-    <br>
-    <br>
-    Password:<input type="password" value="" name="password" placeholder="Enter PassWord">
-    <span style="color: red">@error('password'){{'*'.$message}}@enderror</span>
-    <br>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    </head>
+<body>
+<div class="container pt-5">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Registration</h3>
+        </div>
+        <div class="card-body">
+            <a class="btn btn-primary " href="">Home</a>
+            <form action="{{URL::route('users-save')}}" method="post">
+                @csrf
 
-    <br>
-    <button type="submit">Login</button>
-</form>
+                <label>Name:</label>
+                 <input type="text" class="form-control" name="username" placeholder="Enter userid">
+                <label>Email:</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter email">
+               <label>Password:</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter PassWord">
+                <button type="submit" class="btn btn-primary">Insert</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
