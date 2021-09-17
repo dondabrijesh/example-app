@@ -17,7 +17,7 @@
             {{--<a class="btn btn-dark float-right" href="{{URL::route('insert')}}">Insert Data</a>--}}
         </div>
         <div class="card-body">
-            <form action="{{URL::route('insert-data')}}" method="post">
+            <form action="{{URL::route('insert-data')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{isset($data['id'])?$data['id']:''}}">
                 <label>Name:</label>
@@ -25,31 +25,36 @@
                 <label>Email:</label>
                 <input type="email" class="form-control" name="email" value="{{isset($data['email'])?$data['email']:''}}">
                 <label>Password:</label>
-
                 <input type="password" class="form-control" name="password" value="{{isset($data['password'])?$data['password']:''}}">
-                <input type="radio" class="form-check-input"  name="gender" value="male">Male
-                <input type="radio" class="form-check-input" name="gender" value="female">Female
+                <input type="radio" class="form-check-input"  name="gender" value="male" <?php if(isset($data['gender']) && $data['gender']=='male'){echo 'checked';}?>>Male
+                <input type="radio" class="form-check-input" name="gender" value="female" <?php if(isset($data['gender']) && $data['gender']=='female'){echo 'checked';}?>>Female
                <br> Select:
                 <select class="form-control" name="status">
                     <option>Select</option>
-                    <option value="admin" {{isset($data['status'])?$data['status']=='admin'?'checked':'':''}}>Admin</option>
-                    <option value="local">Local</option>
+                    <option value="admin" <?php if (isset($data['status']) && $data['status']=='admin'){echo 'selected';}?>>Admin</option>
+                    <option value="local" <?php if (isset($data['status']) && $data['status']=='local'){echo 'selected';}?>>Local</option>
                 </select>
                 <label>Category:</label><br>
-                <input type="checkbox" name="category[]" class="form-check-input" value="laravel"><label class="form-check-label">Laravel</label>
-                <input type="checkbox" name="category[]" class="form-check-input" value="jquery"><label class="form-check-label">Jquery</label>
-                <input type="checkbox" name="category[]" class="form-check-input" value="Bootsrap"><label class="form-check-label">Bootsrap</label>
-                <input type="checkbox" name="category[]" class="form-check-input" value="Codeignatrer"><label class="form-check-label">Codeigniter</label>
-
+                <?php
+                if(isset($data['category']))
+                    {
+                        $category=explode(',',$data['category']);
+                    }
+                ?>
+                <input type="checkbox" name="category[]" class="form-check-input" value="laravel" <?php if(isset($data['category']) &&in_array('laravel',$category)){echo 'checked';}?>><label class="form-check-label">Laravel</label>
+                <input type="checkbox" name="category[]" class="form-check-input" value="jquery" <?php if(isset($data['category']) &&in_array('jquery',$category)){echo 'checked';}?>><label class="form-check-label">Jquery</label>
+                <input type="checkbox" name="category[]" class="form-check-input" value="bootsrap" <?php if(isset($data['category']) &&in_array('bootsrap',$category)){echo 'checked';}?>><label class="form-check-label">Bootsrap</label>
+                <input type="checkbox" name="category[]" class="form-check-input" value="codeignater" <?php if(isset($data['category']) &&in_array('codeignater',$category)){echo 'checked';}?>><label class="form-check-label">Codeigniter</label>
+               <br>
+                @if(isset($data['image_path']))
+                    <img style="width: 10%" src="{{asset('images/'.$data->image_path)}}">
+                    @else
+                    <input type="file" name="imgUpload" class="form-control-file">
+                    @endif
                 <br> <button class="btn btn-success">Submit</button>
             </form>
-
-
-
         </div>
-
     </div>
-
 </div>
 </body>
 </html>

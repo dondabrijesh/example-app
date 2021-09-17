@@ -27,7 +27,9 @@ class displayController extends Controller
         }
     }
     function saveData(Request $req)
-    {
+    {   $name = $req->file('imgUpload')->getClientOriginalName();
+
+         $req->file('imgUpload')->move(public_path('images'),$name);
         $data=user::find($req->id);
         if($data!=NULL)
         {
@@ -38,11 +40,14 @@ class displayController extends Controller
             $data->gender=$req->gender;
             $data->status=$req->status;
             $data->category=implode(",",$req->category);
+            $data->file=$name ;
             $data->save();
             return redirect('display');
 
         }
         else{
+
+
             $data=new user();
             $data->name=$req->name;
             $data->email=$req->email;
@@ -50,6 +55,7 @@ class displayController extends Controller
             $data->gender=$req->gender;
             $data->status=$req->status;
             $data->category=implode(",",$req->category);
+            $data->image_path=$name;
             $data->save();
             return redirect('display');
         }
